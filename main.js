@@ -1,8 +1,7 @@
-// Список доступных пакетов (можно расширить)
+// Список доступных пакетов
 const packages = [
     { id: 'package1', name: 'Лига старта. Этап 1', file: 'packages/package1.json' },
-    { id: 'package2', name: 'Лига старта. Этап 2', file: 'packages/package2.json' },
-    // { id: 'custom', name: 'Мой пакет', file: 'packages/custom.json' }
+    { id: 'package2', name: 'Лига старта. Этап 2', file: 'packages/package2.json' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -26,6 +26,8 @@ currentPackageFile = decodeURIComponent(urlParams.get('pkg') || '');
 currentPackageName = decodeURIComponent(urlParams.get('name') || 'Без названия');
 
 if (!currentPackageFile) {
+    // Для теста можно зашить пакет:
+    // currentPackageFile = 'packages/package1.json';
     questionText.innerText = "Ошибка: не выбран пакет вопросов.";
 } else {
     loadPackage(currentPackageFile);
@@ -49,7 +51,7 @@ function loadPackage(packageFile) {
     fetch(packageFile)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Пакет ${packageFile} не найден`);
+                throw new Error(`Пакет ${packageFile} не найден. Статус: ${response.status} ${response.statusText}`);
             }
             return response.json();
         })
@@ -90,35 +92,63 @@ function showQuestion() {
     if (audioElement) {
         audioElement.pause();
         audioElement.currentTime = 0;
+        audioElement = null;
     }
 
-    // Воспроизводим аудио вопроса (если будет, пока просто текст)
-    // В реальном проекте можно добавить генерацию речи или отдельные файлы
+    // --- ВОСПРОИЗВЕДЕНИЕ АУДИО ---
+    if (questionData.audio) {
+        console.log("Загрузка аудио:", questionData.audio);
+        audioElement = new Audio(questionData.audio);
 
-    // Имитируем окончание "аудио" через 5 секунд
-    setTimeout(() => {
-        console.log("Аудио вопроса закончилось (имитация), запускаем таймер");
-        startTimer(60, () => {
-            // Показываем надпись и воспроизводим аудио
-            recordTimeNotice.classList.remove('hidden');
-            recordTimeNotice.innerText = "Время для записи ответа на бланке";
+        // Воспроизводим аудио
+        const playPromise = audioElement.play();
 
-            if (recordTimeAudio) {
-                recordTimeAudio.currentTime = 0;
-                recordTimeAudio.play().catch(e => console.log("Ошибка воспроизведения 'запись':", e));
-            }
+        if (playPromise !== undefined) {
+            playPromise
+                .then(_ => {
+                    console.log("Аудио вопроса началось");
+                })
+                .catch(error => {
+                    console.error("Ошибка воспроизведения аудио:", error);
+                    // Даже если аудио не воспроизвелось, всё равно запускаем таймер
+                    setTimeout(startQuestionTimer, 5000);
+                });
+        }
 
-            // Ждём 10 секунд
+        // Когда аудио заканчивается, запускаем таймер
+        audioElement.onended = function() {
+            console.log("Аудио вопроса закончилось, запускаем таймер");
+            startQuestionTimer();
+        };
+
+    } else {
+        // Если аудио нет, запускаем таймер через паузу
+        console.log("Нет аудио для вопроса, запуск таймера через 5 секунд");
+        setTimeout(startQuestionTimer, 5000);
+    }
+}
+
+function startQuestionTimer() {
+    startTimer(60, () => {
+        // Показываем надпись и воспроизводим аудио
+        recordTimeNotice.classList.remove('hidden');
+        recordTimeNotice.innerText = "Время для записи ответа на бланке";
+
+        if (recordTimeAudio) {
+            recordTimeAudio.currentTime = 0;
+            recordTimeAudio.play().catch(e => console.log("Ошибка воспроизведения 'запись':", e));
+        }
+
+        // Ждём 10 секунд
+        setTimeout(() => {
+            recordTimeNotice.classList.add('hidden');
+            // Через 5 секунд показываем ответ
             setTimeout(() => {
-                recordTimeNotice.classList.add('hidden');
-                // Через 5 секунд показываем ответ
-                setTimeout(() => {
-                    answerSection.classList.remove('hidden');
-                    nextButton.classList.remove('hidden');
-                }, 5000);
-            }, 10000);
-        });
-    }, 5000);
+                answerSection.classList.remove('hidden');
+                nextButton.classList.remove('hidden');
+            }, 5000);
+        }, 10000);
+    });
 }
 
 function startTimer(seconds, onComplete) {
@@ -146,4 +176,16 @@ function endGame() {
     nextButton.classList.add('hidden');
     recordTimeNotice.classList.add('hidden');
     timer.classList.add('hidden');
+    
+    // Останавливаем аудио, если играли
+    if (audioElement) {
+        audioElement.pause();
+        audioElement.currentTime = 0;
+    }
+    timerAudio.pause();
+    timerAudio.currentTime = 0;
+    if (recordTimeAudio) {
+        recordTimeAudio.pause();
+        recordTimeAudio.currentTime = 0;
+    }
 }

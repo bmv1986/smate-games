@@ -15,6 +15,7 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .hidden {
@@ -22,17 +23,31 @@ body, html {
 }
 
 #questionText {
-    font-size: 3em; /* Крупный шрифт */
+    font-size: 3em;
     padding: 20px;
     max-width: 90%;
     line-height: 1.4;
 }
 
 .timer {
-    font-size: 6em; /* Очень крупный таймер */
+    font-size: 6em;
     color: red;
     margin-top: 20px;
     text-shadow: 0 0 10px #ff0000;
+}
+
+.record-notice {
+    font-size: 2.5em;
+    color: yellow;
+    margin-top: 30px;
+    text-shadow: 0 0 10px #ffff00;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
 }
 
 #answerSection h2 {
@@ -44,6 +59,7 @@ body, html {
     font-size: 2em;
     max-width: 80%;
 }
+
 #packagesList {
     margin-top: 20px;
 }
