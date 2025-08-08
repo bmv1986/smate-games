@@ -7,6 +7,9 @@ let currentPackageFile = '';
 let currentPackageName = '';
 
 // Элементы
+const questionScreen = document.getElementById('questionScreen');
+const imageContainer = document.getElementById('imageContainer');
+const questionImage = document.getElementById('questionImage');
 const questionText = document.getElementById('questionText');
 const answerSection = document.getElementById('answerSection');
 const answerText = document.getElementById('answerText');
@@ -15,19 +18,25 @@ const recordTimeNotice = document.getElementById('recordTimeNotice');
 const nextButton = document.getElementById('nextButton');
 const backButton = document.getElementById('backButton');
 
-// Аудио
-timerAudio = new Audio('audio/timer.mp3');
-timerAudio.loop = true;
-recordTimeAudio = new Audio('audio/record_time.mp3');
-
 // Получаем параметры из URL
 const urlParams = new URLSearchParams(window.location.search);
 currentPackageFile = decodeURIComponent(urlParams.get('pkg') || '');
 currentPackageName = decodeURIComponent(urlParams.get('name') || 'Без названия');
 
+// Определяем путь к медиа для текущего пакета
+let packageMediaPath = '';
+if (currentPackageFile) {
+    // Пример: 'packages/package1.json' -> 'media/package1/'
+    const packageName = currentPackageFile.match(/packages\/(.+?)\.json/)?.[1] || 'unknown';
+    packageMediaPath = `media/${packageName}/`;
+}
+
+// Загружаем общие аудио
+timerAudio = new Audio('media/common/timer.mp3');
+timerAudio.loop = true;
+recordTimeAudio = new Audio('media/common/record_time.mp3');
+
 if (!currentPackageFile) {
-    // Для теста можно зашить пакет:
-    // currentPackageFile = 'packages/package1.json';
     questionText.innerText = "Ошибка: не выбран пакет вопросов.";
 } else {
     loadPackage(currentPackageFile);
@@ -78,15 +87,25 @@ function showQuestion() {
 
     const questionData = questions[currentQuestionIndex];
 
-    questionText.innerText = questionData.question;
-    answerText.innerText = questionData.answer;
-
     // Скрываем всё лишнее
     answerSection.classList.add('hidden');
     timer.classList.add('hidden');
-    questionText.classList.remove('hidden');
     recordTimeNotice.classList.add('hidden');
     nextButton.classList.add('hidden');
+    imageContainer.classList.add('hidden');
+
+    // Показываем текст вопроса
+    questionText.innerText = questionData.question;
+    questionText.classList.remove('hidden');
+
+    // Показываем изображение, если есть
+    if (questionData.image) {
+        questionImage.src = questionData.image;
+        imageContainer.classList.remove('hidden');
+    }
+
+    // Ответ
+    answerText.innerText = questionData.answer;
 
     // Останавливаем предыдущие аудио
     if (audioElement) {
@@ -100,7 +119,6 @@ function showQuestion() {
         console.log("Загрузка аудио:", questionData.audio);
         audioElement = new Audio(questionData.audio);
 
-        // Воспроизводим аудио
         const playPromise = audioElement.play();
 
         if (playPromise !== undefined) {
@@ -110,7 +128,6 @@ function showQuestion() {
                 })
                 .catch(error => {
                     console.error("Ошибка воспроизведения аудио:", error);
-                    // Даже если аудио не воспроизвелось, всё равно запускаем таймер
                     setTimeout(startQuestionTimer, 5000);
                 });
         }
@@ -122,7 +139,6 @@ function showQuestion() {
         };
 
     } else {
-        // Если аудио нет, запускаем таймер через паузу
         console.log("Нет аудио для вопроса, запуск таймера через 5 секунд");
         setTimeout(startQuestionTimer, 5000);
     }
@@ -130,7 +146,6 @@ function showQuestion() {
 
 function startQuestionTimer() {
     startTimer(60, () => {
-        // Показываем надпись и воспроизводим аудио
         recordTimeNotice.classList.remove('hidden');
         recordTimeNotice.innerText = "Время для записи ответа на бланке";
 
@@ -139,10 +154,8 @@ function startQuestionTimer() {
             recordTimeAudio.play().catch(e => console.log("Ошибка воспроизведения 'запись':", e));
         }
 
-        // Ждём 10 секунд
         setTimeout(() => {
             recordTimeNotice.classList.add('hidden');
-            // Через 5 секунд показываем ответ
             setTimeout(() => {
                 answerSection.classList.remove('hidden');
                 nextButton.classList.remove('hidden');
@@ -171,13 +184,23 @@ function startTimer(seconds, onComplete) {
 }
 
 function endGame() {
-    questionText.innerText = "Игра окончена!";
+    // Скрываем всё
+    imageContainer.classList.add('hidden');
+    questionText.classList.add('hidden');
     answerSection.classList.add('hidden');
     nextButton.classList.add('hidden');
     recordTimeNotice.classList.add('hidden');
     timer.classList.add('hidden');
     
-    // Останавливаем аудио, если играли
+    // Показываем сообщение об окончании
+    const endMessage = document.createElement('div');
+    endMessage.id = 'endMessage';
+    endMessage.style.fontSize = '3em';
+    endMessage.style.marginTop = '20px';
+    endMessage.innerText = 'Игра окончена!';
+    questionScreen.appendChild(endMessage);
+
+    // Останавливаем аудио
     if (audioElement) {
         audioElement.pause();
         audioElement.currentTime = 0;
