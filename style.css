@@ -21,8 +21,26 @@ body, html {
     display: none;
 }
 
+#questionText {
+    font-size: 3em; /* Крупный шрифт */
+    padding: 20px;
+    max-width: 90%;
+    line-height: 1.4;
+}
+
 .timer {
-    font-size: 4em;
+    font-size: 6em; /* Очень крупный таймер */
     color: red;
     margin-top: 20px;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+#answerSection h2 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+#answerText {
+    font-size: 2em;
+    max-width: 80%;
 }
