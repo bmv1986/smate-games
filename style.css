@@ -44,3 +44,56 @@ body, html {
     font-size: 2em;
     max-width: 80%;
 }
+#packagesList {
+    margin-top: 20px;
+}
+
+.package-button {
+    display: block;
+    margin: 15px auto;
+    padding: 15px 30px;
+    font-size: 1.5em;
+    background-color: #444;
+    color: white;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    min-width: 300px;
+}
+
+.package-button:hover {
+    background-color: #666;
+}
+
+#backButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #333;
+    color: white;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#backButton:hover {
+    background-color: #555;
+}
+
+#nextButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#nextButton:hover {
+    background-color: #218838;
+}
