@@ -87,6 +87,13 @@ function showQuestion() {
 
     const questionData = questions[currentQuestionIndex];
 
+    // --- ОБНОВЛЕНИЕ ПРОГРЕССА ---
+    const progressText = document.getElementById('progressText');
+    if (progressText) {
+        progressText.innerText = `Вопрос ${currentQuestionIndex + 1} из ${questions.length}`;
+    }
+    // --- КОНЕЦ ОБНОВЛЕНИЯ ПРОГРЕССА ---
+
     // Скрываем всё лишнее
     answerSection.classList.add('hidden');
     timer.classList.add('hidden');
