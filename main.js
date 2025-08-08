@@ -1,4 +1,3 @@
-// Список доступных пакетов
 const packages = [
     { id: 'package1', name: 'Лига старта. Этап 1', file: 'packages/package1.json' },
     { id: 'package2', name: 'Лига старта. Этап 2', file: 'packages/package2.json' }
@@ -7,19 +6,16 @@ const packages = [
 document.addEventListener('DOMContentLoaded', () => {
     const packagesList = document.getElementById('packagesList');
 
-    packagesList.innerHTML = ''; // Очистим, если что-то было
+    packagesList.innerHTML = '';
 
     packages.forEach(pkg => {
-        // Создаем кнопку
         const button = document.createElement('button');
         button.className = 'package-button';
 
-        // Создаем элемент для названия
         const nameSpan = document.createElement('span');
         nameSpan.className = 'package-name';
         nameSpan.innerText = pkg.name;
 
-        // Создаем элемент для количества вопросов
         const countSpan = document.createElement('span');
         countSpan.className = 'question-count';
         countSpan.innerText = 'Загрузка...';
@@ -30,13 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         packagesList.appendChild(button);
 
-        // Асинхронно загружаем количество вопросов
         loadQuestionCount(pkg, countSpan);
     });
 });
 
 function selectPackage(pkg) {
-    window.location.href = `game.html?pkg=${encodeURIComponent(pkg.file)}&name=${encodeURIComponent(pkg.name)}`;
+    window.location.href = `package-start.html?pkg=${encodeURIComponent(pkg.file)}&name=${encodeURIComponent(pkg.name)}`;
 }
 
 function loadQuestionCount(pkg, element) {
