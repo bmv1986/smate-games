@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Игра - Что? Где? Когда?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="screen" id="questionScreen">
+        <div id="questionText"></div>
+        <div id="timer" class="timer hidden"></div>
+        <div id="recordTimeNotice" class="record-notice hidden"></div>
+        <div id="answerSection" class="hidden">
+            <h2>Ответ:</h2>
+            <p id="answerText"></p>
+            <button id="nextButton" class="hidden">Следующий вопрос</button>
+        </div>
+        <button id="backButton">Назад к пакетам</button>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
