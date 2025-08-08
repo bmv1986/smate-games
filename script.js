@@ -74,30 +74,56 @@ function showQuestion() {
     // Воспроизводим аудио вопроса
     if (questionData.audio) {
         audioElement = new Audio(questionData.audio);
-        audioElement.play().catch(e => console.log("Ошибка воспроизведения аудио:", e));
-    }
 
-    // Через 5 секунд показываем таймер
-    setTimeout(() => {
-        startTimer(60, () => {
-            // После 60 секунд — 10 секунд на запись
+        // Воспроизводим аудио
+        const playPromise = audioElement.play();
+
+        if (playPromise !== undefined) {
+            playPromise
+                .then(_ => {
+                    // Воспроизведение началось успешно
+                    console.log("Аудио вопроса началось");
+                })
+                .catch(error => {
+                    console.log("Ошибка воспроизведения аудио:", error);
+                    // Даже если аудио не воспроизвелось, всё равно запускаем таймер через паузу
+                    // Это запасной вариант
+                });
+        }
+
+        // Когда аудио заканчивается, запускаем таймер
+        audioElement.onended = function() {
+            console.log("Аудио вопроса закончилось, запускаем таймер");
+            startCountdownToTimer();
+        };
+
+    } else {
+        // Если аудио нет, запускаем обратный отсчёт сразу
+        startCountdownToTimer();
+    }
+}
+
+function startCountdownToTimer() {
+    // 5-секундный обратный отсчёт перед таймером (по желанию можно убрать или изменить)
+    // В данном случае сразу запускаем таймер
+    startTimer(60, () => {
+        // После 60 секунд — 10 секунд на запись
+        setTimeout(() => {
+            // Через 5 секунд показываем ответ
             setTimeout(() => {
-                // Через 5 секунд показываем ответ
-                setTimeout(() => {
-                    answerSection.classList.remove('hidden');
-                    currentQuestionIndex++;
-                    if (currentQuestionIndex < questions.length) {
-                        setTimeout(showQuestion, 5000);
-                    } else {
-                        setTimeout(() => {
-                            document.getElementById('questionText').innerText = "Игра окончена!";
-                            answerSection.classList.add('hidden');
-                        }, 3000);
-                    }
-                }, 5000);
-            }, 10000);
-        });
-    }, 5000);
+                answerSection.classList.remove('hidden');
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    setTimeout(showQuestion, 5000);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('questionText').innerText = "Игра окончена!";
+                        answerSection.classList.add('hidden');
+                    }, 3000);
+                }
+            }, 5000);
+        }, 10000);
+    });
 }
 
 function startTimer(seconds, onComplete) {
