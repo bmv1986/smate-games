@@ -8,16 +8,23 @@
 </head>
 <body>
     <div class="screen game-screen" id="questionScreen">
-        <!-- НОВЫЙ БЛОК С НОМЕРОМ И ПРОГРЕССОМ -->
+        <!-- НОВАЯ ШАПКА -->
         <div class="game-header">
-            <button id="backButton" class="btn back-button">Назад к пакетам</button>
-            <div class="question-counter">
-                <span id="currentQuestionNumber">1</span>
-                <span class="separator">/</span>
-                <span id="totalQuestionsCount">0</span>
+            <div class="header-side header-left">
+                <button id="backButton" class="btn back-button">Назад</button>
+            </div>
+            <div class="header-center">
+                <!-- Пусто для центрирования -->
+            </div>
+            <div class="header-side header-right">
+                <div class="question-counter">
+                    <span id="currentQuestionNumber">1</span>
+                    <span class="separator">/</span>
+                    <span id="totalQuestionsCount">0</span>
+                </div>
             </div>
         </div>
-        <!-- КОНЕЦ НОВОГО БЛОКА -->
+        <!-- КОНЕЦ НОВОЙ ШАПКИ -->
         
         <div id="imageContainer" class="image-container hidden">
             <img id="questionImage" src="" alt="Изображение к вопросу">
@@ -31,6 +38,7 @@
             <button id="nextButton" class="btn next-button hidden">Следующий вопрос</button>
         </div>
     </div>
+
     <script src="game.js"></script>
 </body>
 </html>

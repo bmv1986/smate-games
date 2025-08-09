@@ -387,25 +387,47 @@ body, html {
     left: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between; /* Элементы прижаты к краям */
+    justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(5px);
     z-index: 10;
+    height: 60px; /* Фиксированная высота */
+}
+
+.header-side {
+    flex: 0 0 auto; /* Не растягивается */
+    display: flex;
+    align-items: center;
+}
+
+.header-center {
+    flex: 1 1 auto; /* Занимает всё свободное место */
+    text-align: center;
+    min-width: 0; /* Позволяет сжиматься */
+}
+
+.header-left {
+    justify-content: flex-start;
+}
+
+.header-right {
+    justify-content: flex-end;
 }
 
 .question-counter {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: bold;
     color: #fff;
     background: rgba(255, 255, 255, 0.15);
-    padding: 8px 20px;
-    border-radius: 30px;
+    padding: 6px 15px;
+    border-radius: 20px;
+    white-space: nowrap; /* Не переносить текст */
 }
 
 .question-counter .separator {
-    margin: 0 5px;
+    margin: 0 4px;
     color: #aaa;
 }
 
@@ -413,7 +435,8 @@ body, html {
     background-color: #555;
     color: white;
     font-size: 1rem;
-    padding: 10px 15px;
+    padding: 8px 12px;
+    min-width: 80px;
 }
 
 .back-button:hover {
@@ -428,32 +451,36 @@ body, html {
 /* Адаптация под мобильные */
 @media (max-width: 768px) {
     .game-header {
-        padding: 10px 15px;
+        padding: 8px 10px;
+        height: 50px;
     }
 
     .question-counter {
-        font-size: 1.4rem;
-        padding: 6px 15px;
+        font-size: 1.3rem;
+        padding: 5px 12px;
     }
 
     .back-button {
-        padding: 8px 12px;
+        padding: 6px 10px;
         font-size: 0.9rem;
+        min-width: 70px;
     }
 }
 
 @media (max-width: 480px) {
     .game-header {
-        padding: 10px;
+        padding: 6px 8px;
+        height: 45px;
     }
 
     .question-counter {
-        font-size: 1.3rem;
-        padding: 6px 12px;
+        font-size: 1.1rem;
+        padding: 4px 10px;
     }
 
     .back-button {
-        padding: 6px 10px;
-        font-size: 0.85rem;
+        padding: 5px 8px;
+        font-size: 0.8rem;
+        min-width: 60px;
     }
 }
