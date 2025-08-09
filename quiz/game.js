@@ -1,41 +1,31 @@
 let questions = [];
 let currentQuestionIndex = 0;
-let audioElement = null;
-let timerAudio = null;
-let recordTimeAudio = null;
-let currentPackageFile = '';
-let currentPackageName = '';
+let score = 0;
+let timerInterval = null;
+let timeLeft = 30;
+let timerAudio = null; // Можно добавить аудио таймера позже
 
 // Элементы
-const questionScreen = document.getElementById('questionScreen');
-const imageContainer = document.getElementById('imageContainer');
-const questionImage = document.getElementById('questionImage');
+const quizScreen = document.getElementById('quizScreen');
 const questionText = document.getElementById('questionText');
-const answerSection = document.getElementById('answerSection');
-const answerText = document.getElementById('answerText');
-const timer = document.getElementById('timer');
-const recordTimeNotice = document.getElementById('recordTimeNotice');
+const optionsContainer = document.getElementById('optionsContainer');
+const timerElement = document.getElementById('timer');
+const timerFill = document.getElementById('timerFill');
+const timerText = document.getElementById('timerText');
+const resultScreen = document.getElementById('resultScreen');
+const resultMessage = document.getElementById('resultMessage');
+const explanation = document.getElementById('explanation');
 const nextButton = document.getElementById('nextButton');
 const backButton = document.getElementById('backButton');
+const currentQuestionNumberEl = document.getElementById('currentQuestionNumber');
+const totalQuestionsCountEl = document.getElementById('totalQuestionsCount');
 
 // Получаем параметры из URL
 const urlParams = new URLSearchParams(window.location.search);
-currentPackageFile = decodeURIComponent(urlParams.get('pkg') || '');
-currentPackageName = decodeURIComponent(urlParams.get('name') || 'Без названия');
+const currentPackageFile = decodeURIComponent(urlParams.get('pkg') || '');
+const currentPackageName = decodeURIComponent(urlParams.get('name') || 'Без названия');
 const startParam = urlParams.get('start');
 const startIndex = startParam !== null ? parseInt(startParam, 10) : 0;
-
-// Определяем путь к медиа для текущего пакета
-let packageMediaPath = '';
-if (currentPackageFile) {
-    const packageName = currentPackageFile.match(/packages\/(.+?)\.json/)?.[1] || 'unknown';
-    packageMediaPath = `media/${packageName}/`;
-}
-
-// Загружаем общие аудио
-timerAudio = new Audio('media/common/timer.mp3');
-timerAudio.loop = true;
-recordTimeAudio = new Audio('media/common/record_time.mp3');
 
 if (!currentPackageFile) {
     questionText.innerText = "Ошибка: не выбран пакет вопросов.";
@@ -44,13 +34,15 @@ if (!currentPackageFile) {
 }
 
 backButton.addEventListener('click', () => {
-    window.location.href = 'index.html';
+    if (confirm('Вы уверены, что хотите выйти? Прогресс будет потерян.')) {
+        window.location.href = 'index.html';
+    }
 });
 
 nextButton.addEventListener('click', () => {
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
-        nextButton.classList.add('hidden');
+        resultScreen.classList.add('hidden');
         showQuestion();
     } else {
         endGame();
@@ -69,10 +61,8 @@ function loadPackage(packageFile, startIndex = 0) {
             questions = data;
             currentQuestionIndex = Math.max(0, Math.min(startIndex, questions.length - 1));
             
-            // Обновляем общее количество вопросов в заголовке
-            const totalQuestionsEl = document.getElementById('totalQuestionsCount');
-            if (totalQuestionsEl) {
-                totalQuestionsEl.innerText = questions.length;
+            if (totalQuestionsCountEl) {
+                totalQuestionsCountEl.innerText = questions.length;
             }
             
             console.log(`Пакет "${currentPackageName}" загружен. Начинаем с вопроса ${currentQuestionIndex + 1}:`, questions);
@@ -96,130 +86,149 @@ function showQuestion() {
 
     const questionData = questions[currentQuestionIndex];
 
-    // Обновление номера текущего вопроса
-    const currentQuestionNumberEl = document.getElementById('currentQuestionNumber');
+    // Обновление номера вопроса
     if (currentQuestionNumberEl) {
         currentQuestionNumberEl.innerText = currentQuestionIndex + 1;
     }
 
-    // Скрываем всё лишнее
-    answerSection.classList.add('hidden');
-    timer.classList.add('hidden');
-    recordTimeNotice.classList.add('hidden');
-    nextButton.classList.add('hidden');
-    imageContainer.classList.add('hidden');
+    // Сброс UI
+    resetUI();
 
-    // Показываем текст вопроса
+    // Показываем вопрос
     questionText.innerText = questionData.question;
     questionText.classList.remove('hidden');
 
-    // Показываем изображение, если есть
-    if (questionData.image) {
-        questionImage.src = questionData.image;
-        imageContainer.classList.remove('hidden');
-    }
-
-    // Ответ
-    answerText.innerText = questionData.answer;
-
-    // Останавливаем предыдущие аудио
-    if (audioElement) {
-        audioElement.pause();
-        audioElement.currentTime = 0;
-        audioElement = null;
-    }
-
-    // ВОСПРОИЗВЕДЕНИЕ АУДИО
-    if (questionData.audio) {
-        console.log("Загрузка аудио:", questionData.audio);
-        audioElement = new Audio(questionData.audio);
-
-        const playPromise = audioElement.play();
-
-        if (playPromise !== undefined) {
-            playPromise
-                .then(_ => {
-                    console.log("Аудио вопроса началось");
-                })
-                .catch(error => {
-                    console.error("Ошибка воспроизведения аудио:", error);
-                    setTimeout(startQuestionTimer, 5000);
-                });
-        }
-
-        audioElement.onended = function() {
-            console.log("Аудио вопроса закончилось, запускаем таймер");
-            startQuestionTimer();
-        };
-
-    } else {
-        console.log("Нет аудио для вопроса, запуск таймера через 5 секунд");
-        setTimeout(startQuestionTimer, 5000);
-    }
-}
-
-function startQuestionTimer() {
-    startTimer(60, () => {
-        recordTimeNotice.classList.remove('hidden');
-        recordTimeNotice.innerText = "Время для записи ответа на бланке";
-
-        if (recordTimeAudio) {
-            recordTimeAudio.currentTime = 0;
-            recordTimeAudio.play().catch(e => console.log("Ошибка воспроизведения 'запись':", e));
-        }
-
-        setTimeout(() => {
-            recordTimeNotice.classList.add('hidden');
-            setTimeout(() => {
-                answerSection.classList.remove('hidden');
-                nextButton.classList.remove('hidden');
-            }, 5000);
-        }, 10000);
+    // Создаем варианты ответов
+    optionsContainer.innerHTML = '';
+    questionData.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-button';
+        button.innerText = `${String.fromCharCode(65 + index)}. ${option}`; // A. B. C. D.
+        button.dataset.index = index;
+        button.addEventListener('click', () => onOptionSelected(index, questionData));
+        optionsContainer.appendChild(button);
     });
+
+    // Запускаем таймер
+    startTimer();
 }
 
-function startTimer(seconds, onComplete) {
-    timer.classList.remove('hidden');
-    let timeLeft = seconds;
+function startTimer() {
+    // Сброс таймера
+    clearInterval(timerInterval);
+    timeLeft = 30;
+    updateTimerUI();
 
-    timerAudio.currentTime = 0;
-    timerAudio.play().catch(e => console.log("Ошибка воспроизведения таймера:", e));
-
-    const interval = setInterval(() => {
-        timer.innerText = timeLeft;
+    timerElement.classList.remove('hidden');
+    
+    timerInterval = setInterval(() => {
         timeLeft--;
-        if (timeLeft < 0) {
-            clearInterval(interval);
-            timer.classList.add('hidden');
-            timerAudio.pause();
-            onComplete();
+        updateTimerUI();
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            // Время вышло - считаем как неправильный ответ
+            showResult(false, questions[currentQuestionIndex]);
         }
     }, 1000);
 }
 
-function endGame() {
-    imageContainer.classList.add('hidden');
-    questionText.classList.add('hidden');
-    answerSection.classList.add('hidden');
-    nextButton.classList.add('hidden');
-    recordTimeNotice.classList.add('hidden');
-    timer.classList.add('hidden');
-    
-    const endMessage = document.createElement('div');
-    endMessage.id = 'endMessage';
-    endMessage.style.fontSize = '3em';
-    endMessage.style.marginTop = '20px';
-    endMessage.innerText = 'Игра окончена!';
-    questionScreen.appendChild(endMessage);
+function updateTimerUI() {
+    const percentage = (timeLeft / 30) * 100;
+    timerFill.style.width = `${percentage}%`;
+    timerText.innerText = timeLeft;
 
-    if (audioElement) {
-        audioElement.pause();
-        audioElement.currentTime = 0;
+    // Меняем цвет при малом времени
+    if (timeLeft <= 10) {
+        timerFill.style.background = 'linear-gradient(90deg, #f44336, #ff9800)';
+    } else if (timeLeft <= 20) {
+        timerFill.style.background = 'linear-gradient(90deg, #ff9800, #4caf50)';
     }
-    timerAudio.pause();
-    timerAudio.currentTime = 0;
-    if (recordTimeAudio) {
-        recordTimeAudio.pause();
-        recordTimeAudio.currentTime = 0;
+}
+
+function onOptionSelected(selectedIndex, questionData) {
+    // Останавливаем таймер
+    clearInterval(timerInterval);
+    
+    // Отключаем все кнопки
+    const optionButtons = optionsContainer.querySelectorAll('.option-button');
+    optionButtons.forEach(btn => {
+        btn.classList.add('disabled');
+        btn.disabled = true;
+    });
+
+    const isCorrect = selectedIndex === questionData.correct;
+    
+    // Подсвечиваем выбранный и правильный ответ
+    const selectedButton = optionButtons[selectedIndex];
+    if (selectedButton) {
+        if (isCorrect) {
+            selectedButton.classList.add('correct');
+        } else {
+            selectedButton.classList.add('incorrect');
+        }
     }
+    
+    // Подсвечиваем правильный ответ, если выбрали неправильно
+    if (!isCorrect) {
+        const correctButton = optionButtons[questionData.correct];
+        if (correctButton) {
+            correctButton.classList.add('correct');
+        }
+    }
+
+    // Обновляем счет
+    if (isCorrect) {
+        score++;
+    }
+
+    // Показываем результат
+    showResult(isCorrect, questionData);
+}
+
+function showResult(isCorrect, questionData) {
+    // Скрываем таймер
+    timerElement.classList.add('hidden');
+    
+    // Показываем экран результата
+    resultScreen.classList.remove('hidden');
+    
+    if (isCorrect) {
+        resultMessage.innerText = 'Правильно!';
+        resultMessage.className = 'result-message correct';
+    } else {
+        if (timeLeft <= 0) {
+            resultMessage.innerText = 'Время вышло!';
+        } else {
+            resultMessage.innerText = 'Неправильно!';
+        }
+        resultMessage.className = 'result-message incorrect';
+    }
+    
+    explanation.innerText = questionData.explanation || '';
+}
+
+function resetUI() {
+    // Скрываем все элементы
+    timerElement.classList.add('hidden');
+    resultScreen.classList.add('hidden');
+    
+    // Сброс таймера
+    clearInterval(timerInterval);
+    timeLeft = 30;
+    updateTimerUI();
+    
+    // Очистка контейнеров
+    optionsContainer.innerHTML = '';
+}
+
+function endGame() {
+    resetUI();
+    questionText.innerText = `Викторина окончена! Ваш счёт: ${score} из ${questions.length}`;
+    optionsContainer.innerHTML = `
+        <div style="font-size: 2rem; margin: 20px 0;">
+            Точность: ${Math.round((score / questions.length) * 100)}%
+        </div>
+        <button class="btn next-button" onclick="location.href='index.html'">К выбору пакетов</button>
+    `;
 }
