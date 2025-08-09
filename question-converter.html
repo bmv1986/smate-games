@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конвертер вопросов для ЧГК</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .input-section, .output-section {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #4caf50;
+            margin-top: 0;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            background-color: #2d2d2d;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #convertBtn {
+            background-color: #2196f3;
+        }
+
+        #convertBtn:hover {
+            background-color: #1976d2;
+        }
+
+        #copyBtn {
+            background-color: #ff9800;
+        }
+
+        #copyBtn:hover {
+            background-color: #f57c00;
+        }
+
+        #clearBtn {
+            background-color: #f44336;
+        }
+
+        #clearBtn:hover {
+            background-color: #d32f2f;
+        }
+
+        .instructions {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        .instructions h3 {
+            color: #ff9800;
+            margin-top: 0;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+        }
+
+        .instructions code {
+            background-color: #2d2d2d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .status.success {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 1px solid #4caf50;
+        }
+
+        .status.error {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .button-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Конвертер вопросов для ЧГК</h1>
+        <p class="subtitle">Преобразует текстовый формат в JSON для использования в классической игре</p>
+        
+        <div class="input-section">
+            <h2>Входные данные (формат: Вопрос + Ответ)</h2>
+            <textarea id="inputText" placeholder="Введите вопросы в формате:
+Вопрос 1
+Ответ 1
+
+Вопрос 2
+Ответ 2
+
+..."></textarea>
+        </div>
+        
+        <div class="button-group">
+            <button id="convertBtn">Конвертировать в JSON</button>
+            <button id="copyBtn">Копировать JSON</button>
+            <button id="clearBtn">Очистить всё</button>
+        </div>
+        
+        <div id="statusMessage" class="status hidden"></div>
+        
+        <div class="output-section">
+            <h2>Результат (JSON)</h2>
+            <textarea id="outputJson" placeholder="Здесь появится JSON..." readonly></textarea>
+        </div>
+        
+        <div class="instructions">
+            <h3>Инструкция по использованию:</h3>
+            <ul>
+                <li>Вставьте вопросы в левое поле в формате: <code>Вопрос</code> и с новой строки <code>Ответ</code></li>
+                <li>Между парами вопрос/ответ оставляйте пустую строку</li>
+                <li>Нажмите кнопку <strong>"Конвертировать в JSON"</strong></li>
+                <li>Результат появится в правом поле</li>
+                <li>Используйте кнопку <strong>"Копировать JSON"</strong> для копирования результата</li>
+                <li>Файл с результатом можно сохранить как <code>название_пакета.json</code> в папку <code>classic/data/packages/</code></li>
+            </ul>
+            <h3>Пример входных данных:</h3>
+            <pre style="background: #2d2d2d; padding: 15px; border-radius: 5px; overflow-x: auto;">Сколько будет 2+2*2?
+6
+
+Какой город является столицей Франции?
+Париж</pre>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputText = document.getElementById('inputText');
+            const outputJson = document.getElementById('outputJson');
+            const convertBtn = document.getElementById('convertBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const statusMessage = document.getElementById('statusMessage');
+
+            // Конвертация
+            convertBtn.addEventListener('click', function() {
+                try {
+                    const text = inputText.value.trim();
+                    if (!text) {
+                        showStatus('Пожалуйста, введите текст для конвертации', false);
+                        return;
+                    }
+
+                    const questions = parseQuestions(text);
+                    const jsonResult = convertToJSON(questions);
+                    outputJson.value = JSON.stringify(jsonResult, null, 2);
+                    showStatus(`Успешно сконвертировано: ${questions.length} вопросов`, true);
+                } catch (error) {
+                    showStatus(`Ошибка: ${error.message}`, false);
+                }
+            });
+
+            // Копирование
+            copyBtn.addEventListener('click', function() {
+                if (!outputJson.value) {
+                    showStatus('Нечего копировать', false);
+                    return;
+                }
+
+                outputJson.select();
+                document.execCommand('copy');
+                
+                // Для мобильных устройств
+                if (!document.execCommand('copy')) {
+                    navigator.clipboard.writeText(outputJson.value)
+                        .then(() => showStatus('JSON скопирован в буфер обмена!', true))
+                        .catch(() => showStatus('Не удалось скопировать', false));
+                } else {
+                    showStatus('JSON скопирован в буфер обмена!', true);
+                }
+            });
+
+            // Очистка
+            clearBtn.addEventListener('click', function() {
+                inputText.value = '';
+                outputJson.value = '';
+                hideStatus();
+            });
+
+            // Парсинг вопросов из текста
+            function parseQuestions(text) {
+                const questions = [];
+                const blocks = text.split(/\n\s*\n/).filter(block => block.trim());
+                
+                blocks.forEach(block => {
+                    const lines = block.trim().split('\n').filter(line => line.trim());
+                    if (lines.length >= 2) {
+                        const question = lines[0].trim();
+                        const answer = lines.slice(1).join(' ').trim(); // Объединяем все строки после первой как ответ
+                        if (question && answer) {
+                            questions.push({ question, answer });
+                        }
+                    }
+                });
+                
+                return questions;
+            }
+
+            // Конвертация в JSON формат
+            function convertToJSON(questions) {
+                return questions.map((q, index) => ({
+                    question: q.question,
+                    answer: q.answer,
+                    // Можно добавить заглушку для аудио, если нужно
+                    // audio: `../media/package_custom/audio/q${index + 1}.mp3`
+                }));
+            }
+
+            // Показ сообщения статуса
+            function showStatus(message, isSuccess) {
+                statusMessage.textContent = message;
+                statusMessage.className = 'status ' + (isSuccess ? 'success' : 'error');
+                statusMessage.classList.remove('hidden');
+                
+                // Автоматически скрыть через 3 секунды
+                setTimeout(hideStatus, 3000);
+            }
+
+            // Скрыть сообщение статуса
+            function hideStatus() {
+                statusMessage.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
