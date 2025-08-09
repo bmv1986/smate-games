@@ -53,6 +53,8 @@ body, html {
     text-align: center;
     justify-content: flex-start;
     padding-top: 10vh;
+    padding-left: 20px; /* Добавим отступ слева */
+    padding-right: 20px; /* Добавим отступ справа */
 }
 
 .main-screen::before {
@@ -67,6 +69,11 @@ body, html {
 .main-screen > * {
     position: relative;
     z-index: 2;
+}
+
+.header {
+    width: 100%; /* Убедимся, что заголовок растягивается */
+    text-align: center; /* Выравнивание текста по центру */
 }
 
 .header h1 {
@@ -88,7 +95,8 @@ body, html {
     gap: 20px;
     width: 90%;
     max-width: 1200px;
-    margin-top: 20px;
+    margin: 20px auto 0 auto; /* Центрируем сетку */
+    justify-content: center; /* Центрируем по горизонтали */
 }
 
 .package-button {
