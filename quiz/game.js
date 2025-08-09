@@ -35,8 +35,6 @@ function shuffleArray(array) {
 const urlParams = new URLSearchParams(window.location.search);
 const currentPackageFile = decodeURIComponent(urlParams.get('pkg') || '');
 const currentPackageName = decodeURIComponent(urlParams.get('name') || 'Без названия');
-const startParam = urlParams.get('start');
-const startIndex = startParam !== null ? parseInt(startParam, 10) : 0;
 
 // Проверяем, является ли это супер-игрой
 const superParam = urlParams.get('super');
@@ -67,7 +65,7 @@ nextButton.addEventListener('click', () => {
 });
 
 // Обновленная функция loadPackage
-function loadPackage(packageFile, startIndex = 0) {
+function loadPackage(packageFile) {
     fetch(packageFile)
         .then(response => {
             if (!response.ok) {
@@ -78,7 +76,7 @@ function loadPackage(packageFile, startIndex = 0) {
         .then(data => {
             // Перемешиваем вопросы
             questions = shuffleArray(data);
-            currentQuestionIndex = Math.max(0, Math.min(startIndex, questions.length - 1));
+            currentQuestionIndex = 0; // Всегда начинаем с 0
             
             if (totalQuestionsCountEl) {
                 totalQuestionsCountEl.innerText = questions.length;
@@ -97,7 +95,7 @@ function loadPackage(packageFile, startIndex = 0) {
         });
 }
 
-function loadSuperGame(key, startIndex = 0) {
+function loadSuperGame(key) {
     try {
         const superGameData = localStorage.getItem(key);
         if (!superGameData) {
@@ -107,7 +105,7 @@ function loadSuperGame(key, startIndex = 0) {
         const parsedData = JSON.parse(superGameData);
         // Перемешиваем вопросы
         questions = shuffleArray(parsedData.questions);
-        currentQuestionIndex = Math.max(0, Math.min(startIndex, questions.length - 1));
+        currentQuestionIndex = 0; // Всегда начинаем с 0
         
         if (totalQuestionsCountEl) {
             totalQuestionsCountEl.innerText = questions.length;
@@ -119,9 +117,6 @@ function loadSuperGame(key, startIndex = 0) {
         } else {
             questionText.innerText = "В супер игре нет вопросов.";
         }
-        
-        // Очищаем localStorage после загрузки, чтобы не засорять
-        // localStorage.removeItem(key);
         
     } catch (error) {
         console.error("Ошибка загрузки супер игры:", error);

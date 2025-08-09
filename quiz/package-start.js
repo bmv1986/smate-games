@@ -1,14 +1,12 @@
 // quiz/package-start.js
 let currentPackageFile = '';
 let currentPackageName = '';
-let questions = [];
 let isSuperGame = false;
 let superGameKey = '';
 
 // Элементы
 const packageNameEl = document.getElementById('packageName');
 const totalQuestionsEl = document.getElementById('totalQuestions');
-const questionSelect = document.getElementById('questionSelect');
 const startButton = document.getElementById('startButton');
 const backButton = document.getElementById('backButton');
 
@@ -38,16 +36,7 @@ startButton.addEventListener('click', () => {
     if (isSuperGame && superGameKey) {
         window.location.href = `game.html?super=${encodeURIComponent(superGameKey)}&name=${encodeURIComponent(currentPackageName)}`;
     } else {
-        window.location.href = `game.html?pkg=${encodeURIComponent(currentPackageFile)}&name=${encodeURIComponent(currentPackageName)}&start=0`;
-    }
-});
-
-questionSelect.addEventListener('change', () => {
-    const startIndex = questionSelect.value;
-    if (isSuperGame && superGameKey) {
-        window.location.href = `game.html?super=${encodeURIComponent(superGameKey)}&name=${encodeURIComponent(currentPackageName)}&start=${startIndex}`;
-    } else {
-        window.location.href = `game.html?pkg=${encodeURIComponent(currentPackageFile)}&name=${encodeURIComponent(currentPackageName)}&start=${startIndex}`;
+        window.location.href = `game.html?pkg=${encodeURIComponent(currentPackageFile)}&name=${encodeURIComponent(currentPackageName)}`;
     }
 });
 
@@ -60,16 +49,7 @@ function loadPackageInfo(packageFile) {
             return response.json();
         })
         .then(data => {
-            questions = data;
-            totalQuestionsEl.innerText = questions.length;
-
-            questionSelect.innerHTML = '';
-            for (let i = 0; i < questions.length; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.text = `Вопрос ${i + 1}`;
-                questionSelect.appendChild(option);
-            }
+            totalQuestionsEl.innerText = data.length;
         })
         .catch(error => {
             console.error("Ошибка загрузки пакета:", error);
@@ -88,14 +68,6 @@ function loadSuperGameInfo(key) {
         packageNameEl.innerText = parsedData.name || 'Супер игра';
         // Для супер игры фиксированное количество вопросов
         totalQuestionsEl.innerText = '42';
-        
-        questionSelect.innerHTML = '';
-        for (let i = 0; i < 42; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.text = `Вопрос ${i + 1}`;
-            questionSelect.appendChild(option);
-        }
         
     } catch (error) {
         console.error("Ошибка загрузки информации о супер игре:", error);
