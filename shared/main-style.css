@@ -1,0 +1,250 @@
+/* --- Общие стили --- */
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+.screen {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.btn {
+    padding: 12px 24px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* --- Главная страница выбора режима --- */
+.main-mode-screen {
+    background-image: url('../assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    text-align: center;
+    justify-content: flex-start;
+    padding-top: 10vh;
+}
+
+.main-mode-screen::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.main-mode-screen > * {
+    position: relative;
+    z-index: 2;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.modes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    width: 90%;
+    max-width: 800px;
+    margin-top: 20px;
+}
+
+.mode-button {
+    background-color: rgba(30, 30, 40, 0.85);
+    color: white;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 25px 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.mode-button:hover {
+    background-color: rgba(60, 60, 90, 0.95);
+    border-color: #fff;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+.mode-button .mode-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.mode-button .mode-desc {
+    font-size: 1rem;
+    color: #bbb;
+}
+
+.info-links {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.info-links a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.info-links a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+.back-button-top {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #555;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 10;
+}
+
+.back-button-top:hover {
+    background-color: #777;
+}
+
+@media (max-width: 768px) {
+    .back-button-top {
+        top: 10px;
+        left: 10px;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* --- Страницы информации --- */
+.info-screen {
+    background-color: #111;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.info-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.info-content h1, .info-content h2 {
+    text-align: center;
+}
+
+.back-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #555;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    background-color: #777;
+}
+
+/* --- Адаптация под мобильные --- */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .modes-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        width: 95%;
+    }
+
+    .mode-button {
+        padding: 20px 10px;
+        font-size: 1.1rem;
+    }
+
+    .mode-button .mode-name {
+        font-size: 1.2rem;
+    }
+
+    .info-links {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 30px;
+    }
+
+    .info-links a {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.7rem;
+    }
+
+    .mode-button .mode-name {
+        font-size: 1.1rem;
+    }
+
+    .mode-button .mode-desc {
+        font-size: 0.9rem;
+    }
+}
