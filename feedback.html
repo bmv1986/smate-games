@@ -22,6 +22,15 @@
                 Или через GitHub:
                 <a href="https://github.com/yourusername/chgk-game" target="_blank" style="color: #4caf50;">GitHub репозиторий</a>
             </p>
+            
+            <!-- НОВАЯ КНОПКА -->
+            <div style="text-align: center; margin: 30px 0;">
+                <button id="suggestQuestionBtn" class="btn" style="background-color: #ff9800; padding: 15px 30px; font-size: 1.2rem;">
+                    Предложить свой вопрос
+                </button>
+            </div>
+            <!-- КОНЕЦ НОВОЙ КНОПКИ -->
+            
             <h2>Как вы можете помочь</h2>
             <ul>
                 <li>Сообщить об ошибке или неработающем вопросе.</li>
@@ -34,5 +43,44 @@
             </p>
         </div>
     </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО -->
+    <div id="suggestModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Предложить свой вопрос</h2>
+            <form id="suggestQuestionForm">
+                <div class="form-group">
+                    <label for="author">Автор вопроса:</label>
+                    <input type="text" id="author" name="author" maxlength="100" required>
+                    <div class="char-count"><span id="authorCount">0</span>/100</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="questionText">Вопрос:</label>
+                    <textarea id="questionText" name="questionText" rows="3" maxlength="350" required></textarea>
+                    <div class="char-count"><span id="questionCount">0</span>/350</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="answer">Ответ:</label>
+                    <input type="text" id="answer" name="answer" maxlength="150" required>
+                    <div class="char-count"><span id="answerCount">0</span>/150</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="explanation">Пояснение:</label>
+                    <textarea id="explanation" name="explanation" rows="2" maxlength="200"></textarea>
+                    <div class="char-count"><span id="explanationCount">0</span>/200</div>
+                </div>
+                
+                <button type="submit" class="btn submit-btn">Отправить</button>
+            </form>
+            <div id="formMessage" class="form-message hidden"></div>
+        </div>
+    </div>
+    <!-- КОНЕЦ МОДАЛЬНОГО ОКНО -->
+
+    <script src="feedback.js"></script>
 </body>
 </html>
