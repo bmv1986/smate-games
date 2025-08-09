@@ -3,7 +3,7 @@
 const packages = [
     { id: 'quiz_history', name: 'История', file: 'data/packages/quiz_history.json' },
     { id: 'quiz_science', name: 'Наука', file: 'data/packages/quiz_science.json' },
-    { id: 'quiz_science', name: 'Наука', file: 'data/packages/quiz_himy.json' }
+    { id: 'quiz_science', name: 'Химия', file: 'data/packages/quiz_himy.json' }
     // Добавьте больше пакетов по мере необходимости
 ];
 
