@@ -2,211 +2,212 @@
   {
     "question": "Большинство из нас чаще всего слышали о трех из них. У одного из этих трех — белый на красном, у другого — красный на белом, у третьего — черный на белом. О чем или о ком идет речь?",
     "answer": "Госпитальеры, тамплиеры, тевтонцы (цвет креста на плаще)",
-    "audio": "classic/data/media/package1/audio/q1.mp3"
+    "audio": "../media/package1/audio/q1.mp3"
   },
   {
     "question": "Что связывает слова: реглан, гобелен, силуэт, грог, мансарда, шрапнель, бойкот?",
     "answer": "Все это бывшие имена людей, участвовавших в создании этих понятий",
-    "audio": "classic/data/media/package1/audio/q2.mp3"
+    "audio": "../media/package1/audio/q2.mp3"
   },
   {
     "question": "Вилла миллионера XIX века Гришэма в Техасе имела ванные с тремя кранами: из первого — горячая вода, из второго — холодная. Что текло из третьего?",
     "answer": "Дождевая вода (для промыва длинных волос дочерей)",
-    "audio": "classic/data/media/package1/audio/q3.mp3"
+    "audio": "../media/package1/audio/q3.mp3"
   },
   {
     "question": "Железную рыбку, придуманную канадским ученым для жителей Камбоджи, используют для борьбы с болезнью. Как именно?",
     "answer": "Её кладут в готовящуюся еду на 10 минут, чтобы повысить уровень железа (при анемии)",
-    "audio": "classic/data/media/package1/audio/q4.mp3"
+    "audio": "../media/package1/audio/q4.mp3"
   },
   {
     "question": "«Кривое зеркало. Ворона. Злой мальчик. То была она!..» Что объединяет строки этого стихотворения?",
     "answer": "Это названия рассказов Чехова",
-    "audio": "classic/data/media/package1/audio/q5.mp3"
+    "audio": "../media/package1/audio/q5.mp3"
   },
   {
     "question": "Специалист по живописи Шанталь Рэдклифф рекомендует студентам использовать предмет из черного ящика при изучении картин Караваджо. Что это?",
     "answer": "Солнцезащитные очки (чтобы избежать искажения от современного освещения)",
-    "audio": "classic/data/media/package1/audio/q6.mp3"
+    "audio": "../media/package1/audio/q6.mp3"
   },
   {
     "question": "В китайской литературе «цзацзуань» есть серия изречений «Очень напоминает». Кого сравнивают с ласточками (летают не в одиночку) и мышами (вечно прячутся)?",
     "answer": "Монахинь",
-    "audio": "classic/data/media/package1/audio/q7.mp3"
+    "audio": "../media/package1/audio/q7.mp3"
   },
   {
     "question": "Отгадайте армянскую загадку: «Конь ускакал, седло осталось».",
     "answer": "Река и мост",
-    "audio": "classic/data/media/package1/audio/q8.mp3"
+    "audio": "../media/package1/audio/q8.mp3"
   },
   {
     "question": "Со статуей Свободы в Нью-Йорке 100 лет назад произошла метаморфоза, изменившая её цвет. Какая?",
     "answer": "Медь окислилась, и статуя позеленела (покрылась патиной)",
-    "audio": "classic/data/media/package1/audio/q9.mp3"
+    "audio": "../media/package1/audio/q9.mp3"
   },
   {
     "question": "Японцы говорят: «Мужчина — это дерево». А кто, по их мнению, женщина?",
     "answer": "Птица, сидящая на дереве",
-    "audio": "classic/data/media/package1/audio/q10.mp3"
+    "audio": "../media/package1/audio/q10.mp3"
   },
   {
     "question": "Какой ученый чаще всего упоминался в игре за 41 год?",
     "answer": "Сергей Королёв (из-за адреса: ул. Академика Королёва, 12)",
-    "audio": "classic/data/media/package1/audio/q11.mp3"
+    "audio": "../media/package1/audio/q11.mp3"
   },
   {
     "question": "«Его триумфальная дрожь, его сердитый шепот...» — так английский писатель описал предмет в черном ящике. Что это?",
     "answer": "Веер",
-    "audio": "classic/data/media/package1/audio/q12.mp3"
+    "audio": "../media/package1/audio/q12.mp3"
   },
   {
     "question": "Мэр японского города Вакаяма 200 лет назад поджег рисовые поля. За что ему поставили памятник?",
     "answer": "Так он предупредил жителей о цунами (люди побежали тушить поля и спаслись)",
-    "audio": "classic/data/media/package1/audio/q13.mp3"
+    "audio": "../media/package1/audio/q13.mp3"
   },
   {
     "question": "В Австралии вдоль дорог региона Дейнтри ставят сломанные микроволновки. Зачем?",
     "answer": "Они служат почтовыми ящиками (защищают письма от дождя)",
-    "audio": "classic/data/media/package1/audio/q14.mp3"
+    "audio": "../media/package1/audio/q14.mp3"
   },
   {
     "question": "Что, по мнению Пифагора, нужно сделать во время научных занятий, чтобы пришла ценная мысль?",
     "answer": "Замолчать (сосредоточиться)",
-    "audio": "classic/data/media/package1/audio/q15.mp3"
+    "audio": "../media/package1/audio/q15.mp3"
   },
   {
     "question": "«Растаял снег под тёплым дуновеньем, раскрылся лёд... И растопить весне не удаётся одно лишь только...». Что?",
     "answer": "Лед на катке (или в холодильнике)",
-    "audio": "classic/data/media/package1/audio/q16.mp3"
+    "audio": "../media/package1/audio/q16.mp3"
   },
   {
     "question": "«Хоть они с вами, они не принадлежат вам... их души обитают в доме завтрашнего дня». О ком это?",
     "answer": "О детях",
-    "audio": "classic/data/media/package1/audio/q17.mp3"
+    "audio": "../media/package1/audio/q17.mp3"
   },
   {
     "question": "«Сближает тех, кто далеко, отдаляет тех, кто рядом». Что это?",
     "answer": "Интернет / соцсети",
-    "audio": "classic/data/media/package1/audio/q18.mp3"
+    "audio": "../media/package1/audio/q18.mp3"
   },
   {
     "question": "В XVI веке в Польше подканцлер ведал канцелярией, маршалок — двором. А чем ведал подскарбий?",
     "answer": "Государственной казной",
-    "audio": "classic/data/media/package1/audio/q19.mp3"
+    "audio": "../media/package1/audio/q19.mp3"
   },
   {
     "question": "Кошка котится, собака щенится, овца ягнится. А что делает ослица?",
     "answer": "Нулится (рожает ослёнка)",
-    "audio": "classic/data/media/package1/audio/q20.mp3"
+    "audio": "../media/package1/audio/q20.mp3"
   },
   {
     "question": "Что объединяет: жену сына (для матери), жену брата, жену одного брата (для жены другого)?",
     "answer": "Невестка",
-    "audio": "classic/data/media/package1/audio/q21.mp3"
+    "audio": "../media/package1/audio/q21.mp3"
   },
   {
     "question": "Какой средневековый король пел о крестоносцах, а дома провёл лишь десятую часть правления? Его современники — Саладин и Чингисхан.",
     "answer": "Ричард Львиное Сердце",
-    "audio": "classic/data/media/package1/audio/q22.mp3"
+    "audio": "../media/package1/audio/q22.mp3"
   },
   {
     "question": "В армии, созданной в 1359 году, солдаты сами выбирали командиров. Их дети не могли в неё вступить. Что это за армия?",
     "answer": "Янычары («ени чари» — новое войско)",
-    "audio": "classic/data/media/package1/audio/q23.mp3"
+    "audio": "../media/package1/audio/q23.mp3"
   },
   {
     "question": "Прообраз этого вида спорта — рыцарские турниры. В 1866 году рекорд составлял 3.21 м. Что это?",
     "answer": "Прыжки с шестом",
-    "audio": "classic/data/media/package1/audio/q24.mp3"
+    "audio": "../media/package1/audio/q24.mp3"
   },
   {
     "question": "Газета XVIII века хвалила это растение как лекарство от цинги и «одиночества». Что это?",
     "answer": "Картофель",
-    "audio": "classic/data/media/package1/audio/q25.mp3"
+    "audio": "../media/package1/audio/q25.mp3"
   },
   {
     "question": "В чём ошибка композиции «Царь-пушка» в Кремле?",
     "answer": "Рядом лежат ядра, но пушка могла стрелять только картечью (слишком тонкие стенки ствола)",
-    "audio": "classic/data/media/package1/audio/q26.mp3"
+    "audio": "../media/package1/audio/q26.mp3"
   },
   {
     "question": "Сначала это значило «пища», потом «плохая пища», затем «отрава». Какое слово?",
     "answer": "Яд",
-    "audio": "classic/data/media/package1/audio/q27.mp3"
+    "audio": "../media/package1/audio/q27.mp3"
   },
   {
     "question": "У какого легендарного персонажа от испуга застрял в горле кусок фрукта, давший название анатомическому термину?",
     "answer": "У Адама («адамово яблоко» от яблока)",
-    "audio": "classic/data/media/package1/audio/q28.mp3"
+    "audio": "../media/package1/audio/q28.mp3"
   },
   {
     "question": "При обретении независимости Британской Гвианой выяснилась её уникальная для Америки особенность. Какая?",
     "answer": "70% населения — индийцы (привезены англичанами как рабочая сила)",
-    "audio": "classic/data/media/package1/audio/q29.mp3"
+    "audio": "../media/package1/audio/q29.mp3"
   },
   {
     "question": "Греки посвящали это дерево Аполлону, славяне — Перуну. Его плоды богаты крахмалом. Что это?",
     "answer": "Дуб (жёлуди)",
-    "audio": "classic/data/media/package1/audio/q30.mp3"
+    "audio": "../media/package1/audio/q30.mp3"
   },
   {
     "question": "Латинское название этого растения — «настоящая детская каша». В Греции его ели атлеты, в Японии — самураи. Что это?",
     "answer": "Мак",
-    "audio": "classic/data/media/package1/audio/q31.mp3"
+    "audio": "../media/package1/audio/q31.mp3"
   },
   {
     "question": "В V–VIII веках монаха, не понимавшего Библию, называли греческим словом «простой». Позже оно стало ругательством. Каким?",
     "answer": "Идиот",
-    "audio": "classic/data/media/package1/audio/q32.mp3"
+    "audio": "../media/package1/audio/q32.mp3"
   },
   {
     "question": "В ноябре 1970–1971 гг. «Луноход-1» исследовал Луну. В какой день операторы заставили его двигаться по траектории «знака бесконечности»?",
     "answer": "8 марта (в честь женского дня)",
-    "audio": "classic/data/media/package1/audio/q33.mp3"
+    "audio": "../media/package1/audio/q33.mp3"
   },
   {
     "question": "«Как-то раз на исходе весны я заметила слёзы сосны...». Чей это монолог и где оказался объект?",
     "answer": "Пчела, застывшая в янтаре",
-    "audio": "classic/data/media/package1/audio/q34.mp3"
+    "audio": "../media/package1/audio/q34.mp3"
   },
   {
     "question": "Разгадайте корейскую загадку: «Шевелится, пока нет ветра, приходит ветер — перестаёт».",
     "answer": "Дверь (скрипит на петлях без ветра, а при ветре неподвижна)",
-    "audio": "classic/data/media/package1/audio/q35.mp3"
+    "audio": "../media/package1/audio/q35.mp3"
   },
   {
     "question": "Какие два продукта вдохновляли Гоголя на создание произведений?",
     "answer": "Итальянские макароны и сыр",
-    "audio": "classic/data/media/package1/audio/q36.mp3"
+    "audio": "../media/package1/audio/q36.mp3"
   },
   {
     "question": "Однажды Чарльз Дарвин обнаружил в гнезде птицы рубиновую брошь. Назовите птицу.",
     "answer": "Дятел",
-    "audio": "classic/data/media/package1/audio/q37.mp3"
+    "audio": "../media/package1/audio/q37.mp3"
   },
   {
     "question": "Внимание, цитата: «Когда ОНА приходит, все встают». Назовите ЕЁ двумя словами.",
     "answer": "Королева Великобритании",
-    "audio": "classic/data/media/package1/audio/q38.mp3"
+    "audio": "../media/package1/audio/q38.mp3"
   },
   {
     "question": "В одном из вариантов герба Норильска изображено животное с клювом. Какое?",
     "answer": "Песец",
-    "audio": "classic/data/media/package1/audio/q39.mp3"
+    "audio": "../media/package1/audio/q39.mp3"
   },
   {
     "question": "Согласно легенде, ЭТО СЛОВО появилось, когда монах, увидев прибор, воскликнул: «Как это работает?» Напишите ЭТО СЛОВО.",
     "answer": "Галилео",
-    "audio": "classic/data/media/package1/audio/q40.mp3"
+    "audio": "../media/package1/audio/q40.mp3"
   },
   {
     "question": "В 1990-х компания Nike выпустила кроссовки с карманом для монет. Для чего?",
     "answer": "Для телефона-автомата",
-    "audio": "classic/data/media/package1/audio/q41.mp3"
+    "audio": "../media/package1/audio/q41.mp3"
   },
   {
     "question": "В Средние века считалось, что ОН может видеть сквозь стены. Кто ОН?",
     "answer": "Рыба меч",
-    "audio": "classic/data/media/package1/audio/q42.mp3"
+    "audio": "../media/package1/audio/q42.mp3"
   }
 ]
+
