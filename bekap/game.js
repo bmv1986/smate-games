@@ -22,12 +22,11 @@ const backButton = document.getElementById('backButton');
 const urlParams = new URLSearchParams(window.location.search);
 currentPackageFile = decodeURIComponent(urlParams.get('pkg') || '');
 currentPackageName = decodeURIComponent(urlParams.get('name') || 'Без названия');
-const startParam = urlParams.get('start');
-const startIndex = startParam !== null ? parseInt(startParam, 10) : 0;
 
 // Определяем путь к медиа для текущего пакета
 let packageMediaPath = '';
 if (currentPackageFile) {
+    // Пример: 'packages/package1.json' -> 'media/package1/'
     const packageName = currentPackageFile.match(/packages\/(.+?)\.json/)?.[1] || 'unknown';
     packageMediaPath = `media/${packageName}/`;
 }
@@ -40,7 +39,7 @@ recordTimeAudio = new Audio('media/common/record_time.mp3');
 if (!currentPackageFile) {
     questionText.innerText = "Ошибка: не выбран пакет вопросов.";
 } else {
-    loadPackage(currentPackageFile, startIndex);
+    loadPackage(currentPackageFile);
 }
 
 backButton.addEventListener('click', () => {
@@ -57,7 +56,7 @@ nextButton.addEventListener('click', () => {
     }
 });
 
-function loadPackage(packageFile, startIndex = 0) {
+function loadPackage(packageFile) {
     fetch(packageFile)
         .then(response => {
             if (!response.ok) {
@@ -67,15 +66,7 @@ function loadPackage(packageFile, startIndex = 0) {
         })
         .then(data => {
             questions = data;
-            currentQuestionIndex = Math.max(0, Math.min(startIndex, questions.length - 1));
-            
-            // Обновляем общее количество вопросов в заголовке
-            const totalQuestionsEl = document.getElementById('totalQuestionsCount');
-            if (totalQuestionsEl) {
-                totalQuestionsEl.innerText = questions.length;
-            }
-            
-            console.log(`Пакет "${currentPackageName}" загружен. Начинаем с вопроса ${currentQuestionIndex + 1}:`, questions);
+            console.log(`Пакет "${currentPackageName}" загружен:`, questions);
             if (questions.length > 0) {
                 showQuestion();
             } else {
@@ -96,11 +87,12 @@ function showQuestion() {
 
     const questionData = questions[currentQuestionIndex];
 
-    // Обновление номера текущего вопроса
-    const currentQuestionNumberEl = document.getElementById('currentQuestionNumber');
-    if (currentQuestionNumberEl) {
-        currentQuestionNumberEl.innerText = currentQuestionIndex + 1;
+    // --- ОБНОВЛЕНИЕ ПРОГРЕССА ---
+    const progressText = document.getElementById('progressText');
+    if (progressText) {
+        progressText.innerText = `Вопрос ${currentQuestionIndex + 1} из ${questions.length}`;
     }
+    // --- КОНЕЦ ОБНОВЛЕНИЯ ПРОГРЕССА ---
 
     // Скрываем всё лишнее
     answerSection.classList.add('hidden');
@@ -129,7 +121,7 @@ function showQuestion() {
         audioElement = null;
     }
 
-    // ВОСПРОИЗВЕДЕНИЕ АУДИО
+    // --- ВОСПРОИЗВЕДЕНИЕ АУДИО ---
     if (questionData.audio) {
         console.log("Загрузка аудио:", questionData.audio);
         audioElement = new Audio(questionData.audio);
@@ -147,6 +139,7 @@ function showQuestion() {
                 });
         }
 
+        // Когда аудио заканчивается, запускаем таймер
         audioElement.onended = function() {
             console.log("Аудио вопроса закончилось, запускаем таймер");
             startQuestionTimer();
@@ -198,6 +191,7 @@ function startTimer(seconds, onComplete) {
 }
 
 function endGame() {
+    // Скрываем всё
     imageContainer.classList.add('hidden');
     questionText.classList.add('hidden');
     answerSection.classList.add('hidden');
@@ -205,6 +199,7 @@ function endGame() {
     recordTimeNotice.classList.add('hidden');
     timer.classList.add('hidden');
     
+    // Показываем сообщение об окончании
     const endMessage = document.createElement('div');
     endMessage.id = 'endMessage';
     endMessage.style.fontSize = '3em';
@@ -212,6 +207,7 @@ function endGame() {
     endMessage.innerText = 'Игра окончена!';
     questionScreen.appendChild(endMessage);
 
+    // Останавливаем аудио
     if (audioElement) {
         audioElement.pause();
         audioElement.currentTime = 0;
