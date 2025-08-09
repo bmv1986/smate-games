@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Вход</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="screen login-screen">
+        <div class="login-container">
+            <h1>Админ-панель</h1>
+            <h2>Что? Где? Когда?</h2>
+            
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Имя пользователя:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="btn login-btn">Войти</button>
+            </form>
+            
+            <div id="loginMessage" class="message hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const loginMessage = document.getElementById('loginMessage');
+            
+            // Для демо-версии - простой вход без проверки
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // В реальной системе здесь будет проверка через сервер
+                if (username && password) {
+                    // Сохраняем состояние авторизации
+                    localStorage.setItem('adminLoggedIn', 'true');
+                    window.location.href = 'dashboard.html';
+                } else {
+                    showMessage('Пожалуйста, заполните все поля', false);
+                }
+            });
+            
+            function showMessage(text, isSuccess) {
+                loginMessage.textContent = text;
+                loginMessage.className = 'message ' + (isSuccess ? 'success' : 'error');
+                loginMessage.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

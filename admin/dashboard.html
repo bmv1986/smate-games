@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Дашборд</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="screen dashboard-screen">
+        <!-- Шапка -->
+        <div class="admin-header">
+            <h1>Админ-панель</h1>
+            <div class="admin-controls">
+                <span class="user-info">Администратор</span>
+                <button id="logoutBtn" class="btn logout-btn">Выйти</button>
+            </div>
+        </div>
+        
+        <!-- Основной контент -->
+        <div class="dashboard-content">
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <h3>Классические пакеты</h3>
+                    <div class="stat-number" id="classicCount">0</div>
+                    <div class="stat-desc">пакетов</div>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Викторины</h3>
+                    <div class="stat-number" id="quizCount">0</div>
+                    <div class="stat-desc">пакетов</div>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Всего вопросов</h3>
+                    <div class="stat-number" id="totalQuestions">0</div>
+                    <div class="stat-desc">вопросов</div>
+                </div>
+            </div>
+            
+            <!-- Разделы управления -->
+            <div class="management-sections">
+                <h2>Управление контентом</h2>
+                
+                <div class="section-grid">
+                    <div class="section-card" onclick="location.href='package-editor.html?type=classic'">
+                        <h3>Классические пакеты</h3>
+                        <p>Создание и редактирование пакетов для классической игры</p>
+                        <div class="card-icon">📝</div>
+                    </div>
+                    
+                    <div class="section-card" onclick="location.href='package-editor.html?type=quiz'">
+                        <h3>Викторины</h3>
+                        <p>Создание и редактирование пакетов для викторин</p>
+                        <div class="card-icon">❓</div>
+                    </div>
+                    
+                    <div class="section-card" onclick="location.href='#'">
+                        <h3>Медиа-файлы</h3>
+                        <p>Загрузка аудио и изображений</p>
+                        <div class="card-icon">🎵</div>
+                    </div>
+                    
+                    <div class="section-card" onclick="location.href='#'">
+                        <h3>Настройки</h3>
+                        <p>Общие настройки приложения</p>
+                        <div class="card-icon">⚙️</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Список пакетов -->
+            <div class="packages-section">
+                <div class="section-header">
+                    <h2>Существующие пакеты</h2>
+                    <button class="btn primary-btn" onclick="createNewPackage()">Создать новый пакет</button>
+                </div>
+                
+                <div class="packages-list" id="packagesList">
+                    <!-- Пакеты будут загружены сюда -->
+                    <div class="empty-state">
+                        <p>Загрузка пакетов...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

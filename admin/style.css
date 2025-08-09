@@ -1,0 +1,732 @@
+/* Общие стили */
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn.primary-btn {
+    background-color: #2196f3;
+    color: white;
+}
+
+.btn.primary-btn:hover {
+    background-color: #1976d2;
+}
+
+.btn.save-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn.save-btn:hover {
+    background-color: #45a049;
+}
+
+.btn.logout-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn.logout-btn:hover {
+    background-color: #d32f2f;
+}
+
+.btn.back-btn {
+    background-color: #607d8b;
+    color: white;
+}
+
+.btn.back-btn:hover {
+    background-color: #455a64;
+}
+
+.btn.cancel-btn {
+    background-color: #9e9e9e;
+    color: white;
+}
+
+.btn.cancel-btn:hover {
+    background-color: #616161;
+}
+
+.btn.edit-btn {
+    background-color: #ffc107;
+    color: #333;
+    padding: 8px 15px;
+}
+
+.btn.edit-btn:hover {
+    background-color: #e0a800;
+}
+
+.btn.delete-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 8px 15px;
+}
+
+.btn.delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Сообщения */
+.message {
+    padding: 15px;
+    border-radius: 5px;
+    margin: 15px;
+    text-align: center;
+    font-weight: 500;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    min-width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.message.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+}
+
+.message.error {
+    background-color: #f2dede;
+    color: #a94442;
+    border: 1px solid #ebccd1;
+}
+
+/* Формы */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #2196f3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* --- Страница входа --- */
+.login-screen {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-container h1 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.login-container h2 {
+    margin: 0 0 30px 0;
+    color: #666;
+    font-weight: normal;
+}
+
+.login-form {
+    text-align: left;
+}
+
+/* --- Дашборд --- */
+.dashboard-screen {
+    background-color: #f8f9fa;
+}
+
+.admin-header {
+    background: white;
+    padding: 20px 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-header h1 {
+    margin: 0;
+    color: #333;
+}
+
+.admin-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info {
+    color: #666;
+    font-weight: 500;
+}
+
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.stat-card h3 {
+    margin: 0 0 15px 0;
+    color: #666;
+    font-size: 18px;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2196f3;
+    margin: 10px 0;
+}
+
+.stat-desc {
+    color: #999;
+    font-size: 14px;
+}
+
+.management-sections {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px 30px;
+}
+
+.management-sections h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.section-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.section-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.section-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.section-card h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.section-card p {
+    color: #666;
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+}
+
+.card-icon {
+    font-size: 2rem;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    opacity: 0.2;
+}
+
+.packages-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px 30px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.packages-list {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.package-item {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.package-item:hover {
+    background-color: #f8f9fa;
+}
+
+.package-item:last-child {
+    border-bottom: none;
+}
+
+.package-info h3 {
+    margin: 0 0 8px 0;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.package-info h3::before {
+    content: "📦";
+    font-size: 16px;
+}
+
+.package-info.classic h3::before {
+    content: "📝";
+}
+
+.package-info.quiz h3::before {
+    content: "❓";
+}
+
+.package-meta {
+    color: #666;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.package-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.package-meta span::before {
+    font-size: 12px;
+}
+
+.package-meta .type::before {
+    content: "🏷️";
+}
+
+.package-meta .count::before {
+    content: "🔢";
+}
+
+.package-meta .date::before {
+    content: "📅";
+}
+
+.package-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+/* --- Редактор пакетов --- */
+.editor-screen {
+    background-color: #f8f9fa;
+}
+
+.editor-header {
+    background: white;
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editor-header h1 {
+    margin: 0;
+    color: #333;
+}
+
+.editor-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.package-settings {
+    background: white;
+    padding: 25px 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.questions-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px 30px;
+}
+
+.questions-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.questions-list {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+/* --- Улучшенные стили для превью вопросов --- */
+.question-preview {
+    flex: 1;
+    min-width: 0;
+}
+
+.question-preview h4 {
+    margin: 0 0 8px 0;
+    color: #2196f3;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.question-preview h4::before {
+    content: "❓";
+    font-size: 14px;
+}
+
+.question-item.classic .question-preview h4::before {
+    content: "📝";
+}
+
+.question-item.quiz .question-preview h4::before {
+    content: "❔";
+}
+
+.question-text {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 15px;
+    line-height: 1.4;
+    max-height: 60px;
+    overflow: hidden;
+    position: relative;
+}
+
+.question-meta {
+    color: #666;
+    font-size: 13px;
+    background-color: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border-left: 3px solid #2196f3;
+}
+
+.question-meta strong {
+    color: #333;
+}
+
+.question-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* --- Модальные окна --- */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.close-modal:hover {
+    color: #333;
+}
+
+.question-modal h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.option-input {
+    flex: 1;
+    margin: 0;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.file-info {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* --- Специфические стили для типов вопросов --- */
+.classic-question .form-group,
+.quiz-question .form-group {
+    margin-bottom: 15px;
+}
+
+.option-item input[type="radio"] {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.option-item input[type="text"] {
+    margin-left: 5px;
+}
+
+/* --- Адаптивность --- */
+@media (max-width: 768px) {
+    .admin-header,
+    .editor-header {
+        padding: 15px 20px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .section-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .package-item,
+    .question-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .package-actions,
+    .question-actions {
+        align-self: stretch;
+        justify-content: stretch;
+    }
+    
+    .package-actions .btn,
+    .question-actions .btn {
+        flex: 1;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .modal-actions .btn {
+        width: 100%;
+    }
+    
+    .message {
+        left: 10px;
+        right: 10px;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .admin-header,
+    .editor-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .admin-controls {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .editor-controls {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .editor-controls .btn {
+        width: 100%;
+    }
+    
+    .option-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}

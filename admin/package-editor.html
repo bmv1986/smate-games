@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор пакетов - Админ-панель</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="screen editor-screen">
+        <!-- Шапка редактора -->
+        <div class="editor-header">
+            <button class="btn back-btn" onclick="history.back()">← Назад</button>
+            <h1 id="editorTitle">Редактор пакета</h1>
+            <div class="editor-controls">
+                <button class="btn save-btn" id="saveBtn">Сохранить</button>
+                <button class="btn primary-btn" id="addQuestionBtn">Добавить вопрос</button>
+            </div>
+        </div>
+        
+        <!-- Настройки пакета -->
+        <div class="package-settings">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="packageName">Название пакета:</label>
+                    <input type="text" id="packageName" placeholder="Введите название пакета">
+                </div>
+                
+                <div class="form-group">
+                    <label for="packageType">Тип пакета:</label>
+                    <select id="packageType">
+                        <option value="classic">Классическая игра</option>
+                        <option value="quiz">Викторина</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Список вопросов -->
+        <div class="questions-section">
+            <h2>Вопросы в пакете</h2>
+            <div class="questions-list" id="questionsList">
+                <div class="empty-state">
+                    <p>В пакете пока нет вопросов</p>
+                    <button class="btn primary-btn" onclick="addQuestion()">Добавить первый вопрос</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Модальное окно вопроса -->
+        <div id="questionModal" class="modal hidden">
+            <div class="modal-content question-modal">
+                <span class="close-modal">&times;</span>
+                <h2 id="modalTitle">Редактирование вопроса</h2>
+                
+                <form id="questionForm">
+                    <input type="hidden" id="questionIndex">
+                    
+                    <!-- Для классической игры -->
+                    <div class="question-type classic-question hidden">
+                        <div class="form-group">
+                            <label for="classicQuestion">Вопрос:</label>
+                            <textarea id="classicQuestion" rows="3" placeholder="Введите текст вопроса"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="classicAnswer">Ответ:</label>
+                            <input type="text" id="classicAnswer" placeholder="Введите ответ">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="audioFile">Аудио файл:</label>
+                                <input type="file" id="audioFile" accept="audio/*">
+                                <div class="file-info" id="audioFileInfo"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="imageFile">Изображение:</label>
+                                <input type="file" id="imageFile" accept="image/*">
+                                <div class="file-info" id="imageFileInfo"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Для викторины -->
+                    <div class="question-type quiz-question hidden">
+                        <div class="form-group">
+                            <label for="quizQuestion">Вопрос:</label>
+                            <textarea id="quizQuestion" rows="2" placeholder="Введите текст вопроса"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Варианты ответов:</label>
+                            <div class="options-list">
+                                <div class="option-item">
+                                    <input type="radio" name="correctOption" id="option0" value="0">
+                                    <input type="text" class="option-input" id="optionText0" placeholder="Вариант ответа 1">
+                                </div>
+                                
+                                <div class="option-item">
+                                    <input type="radio" name="correctOption" id="option1" value="1">
+                                    <input type="text" class="option-input" id="optionText1" placeholder="Вариант ответа 2">
+                                </div>
+                                
+                                <div class="option-item">
+                                    <input type="radio" name="correctOption" id="option2" value="2">
+                                    <input type="text" class="option-input" id="optionText2" placeholder="Вариант ответа 3">
+                                </div>
+                                
+                                <div class="option-item">
+                                    <input type="radio" name="correctOption" id="option3" value="3">
+                                    <input type="text" class="option-input" id="optionText3" placeholder="Вариант ответа 4">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="explanation">Пояснение (необязательно):</label>
+                            <textarea id="explanation" rows="2" placeholder="Пояснение к правильному ответу"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn cancel-btn" id="cancelQuestionBtn">Отмена</button>
+                        <button type="submit" class="btn save-btn">Сохранить вопрос</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Сообщения -->
+        <div id="editorMessage" class="message hidden"></div>
+    </div>
+
+    <script src="package-editor.js"></script>
+</body>
+</html>
