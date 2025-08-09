@@ -2,7 +2,8 @@
 // Список доступных пакетов для викторины
 const packages = [
     { id: 'quiz_history', name: 'История', file: 'data/packages/quiz_history.json' },
-    { id: 'quiz_science', name: 'Наука', file: 'data/packages/quiz_science.json' }
+    { id: 'quiz_science', name: 'Наука', file: 'data/packages/quiz_science.json' },
+    { id: 'quiz_science', name: 'Наука', file: 'data/packages/quiz_himy.json' }
     // Добавьте больше пакетов по мере необходимости
 ];
 
@@ -97,7 +98,7 @@ async function createSuperGamePackage(packageFiles) {
         const superGameKey = 'super_game_' + Date.now();
         localStorage.setItem(superGameKey, JSON.stringify(superGamePackage));
         
-        window.location.href = `game.html?super=${encodeURIComponent(superGameKey)}&name=${encodeURIComponent('Супер игра')}`;
+        window.location.href = `package-start.html?super=${encodeURIComponent(superGameKey)}&name=${encodeURIComponent('Супер игра')}`;
         
     } catch (error) {
         console.error("Ошибка создания супер игры:", error);

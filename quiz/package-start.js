@@ -86,7 +86,8 @@ function loadSuperGameInfo(key) {
         
         const parsedData = JSON.parse(superGameData);
         packageNameEl.innerText = parsedData.name || 'Супер игра';
-        totalQuestionsEl.innerText = '42'; // Фиксированное количество
+        // Для супер игры фиксированное количество вопросов
+        totalQuestionsEl.innerText = '42';
         
         questionSelect.innerHTML = '';
         for (let i = 0; i < 42; i++) {

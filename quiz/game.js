@@ -3,7 +3,7 @@ let currentQuestionIndex = 0;
 let score = 0;
 let timerInterval = null;
 let timeLeft = 30;
-let timerAudio = null; // Можно добавить аудио таймера позже
+let timerAudio = null;
 let isSuperGame = false;
 let superGameKey = '';
 
@@ -22,6 +22,15 @@ const backButton = document.getElementById('backButton');
 const currentQuestionNumberEl = document.getElementById('currentQuestionNumber');
 const totalQuestionsCountEl = document.getElementById('totalQuestionsCount');
 
+// Функция для перемешивания массива (алгоритм Фишера-Йетса)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 // Получаем параметры из URL
 const urlParams = new URLSearchParams(window.location.search);
 const currentPackageFile = decodeURIComponent(urlParams.get('pkg') || '');
@@ -29,10 +38,16 @@ const currentPackageName = decodeURIComponent(urlParams.get('name') || 'Без �
 const startParam = urlParams.get('start');
 const startIndex = startParam !== null ? parseInt(startParam, 10) : 0;
 
-if (!currentPackageFile) {
-    questionText.innerText = "Ошибка: не выбран пакет вопросов.";
-} else {
+// Проверяем, является ли это супер-игрой
+const superParam = urlParams.get('super');
+if (superParam) {
+    isSuperGame = true;
+    superGameKey = decodeURIComponent(superParam);
+    loadSuperGame(superGameKey, startIndex);
+} else if (currentPackageFile) {
     loadPackage(currentPackageFile, startIndex);
+} else {
+    questionText.innerText = "Ошибка: не выбран пакет вопросов.";
 }
 
 backButton.addEventListener('click', () => {
@@ -53,15 +68,64 @@ nextButton.addEventListener('click', () => {
 
 // Обновленная функция loadPackage
 function loadPackage(packageFile, startIndex = 0) {
-    // Проверяем, является ли это супер-игрой
-    const superParam = urlParams.get('super');
-    
-    if (superParam) {
-        isSuperGame = true;
-        superGameKey = decodeURIComponent(superParam);
-        loadSuperGame(superGameKey, startIndex);
-    } else {
-        loadRegularPackage(packageFile, startIndex);
+    fetch(packageFile)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Пакет ${packageFile} не найден. Статус: ${response.status} ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Перемешиваем вопросы
+            questions = shuffleArray(data);
+            currentQuestionIndex = Math.max(0, Math.min(startIndex, questions.length - 1));
+            
+            if (totalQuestionsCountEl) {
+                totalQuestionsCountEl.innerText = questions.length;
+            }
+            
+            console.log(`Пакет "${currentPackageName}" загружен и перемешан. Всего вопросов: ${questions.length}`);
+            if (questions.length > 0) {
+                showQuestion();
+            } else {
+                questionText.innerText = "В этом пакете нет вопросов.";
+            }
+        })
+        .catch(error => {
+            console.error("Ошибка загрузки пакета:", error);
+            questionText.innerText = `Ошибка загрузки пакета: ${error.message}`;
+        });
+}
+
+function loadSuperGame(key, startIndex = 0) {
+    try {
+        const superGameData = localStorage.getItem(key);
+        if (!superGameData) {
+            throw new Error('Данные супер игры не найдены.');
+        }
+        
+        const parsedData = JSON.parse(superGameData);
+        // Перемешиваем вопросы
+        questions = shuffleArray(parsedData.questions);
+        currentQuestionIndex = Math.max(0, Math.min(startIndex, questions.length - 1));
+        
+        if (totalQuestionsCountEl) {
+            totalQuestionsCountEl.innerText = questions.length;
+        }
+        
+        console.log(`Супер игра "${parsedData.name}" загружена и перемешана. Всего вопросов: ${questions.length}`);
+        if (questions.length > 0) {
+            showQuestion();
+        } else {
+            questionText.innerText = "В супер игре нет вопросов.";
+        }
+        
+        // Очищаем localStorage после загрузки, чтобы не засорять
+        // localStorage.removeItem(key);
+        
+    } catch (error) {
+        console.error("Ошибка загрузки супер игры:", error);
+        questionText.innerText = `Ошибка загрузки супер игры: ${error.message}`;
     }
 }
 
