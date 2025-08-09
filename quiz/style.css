@@ -508,3 +508,37 @@ body, html {
         font-size: 1.1rem;
     }
 }
+.package-button .question-count {
+    font-size: 1rem;
+    margin-top: 10px;
+    color: #bbb;
+}
+
+/* НОВЫЙ СТИЛЬ ДЛЯ СУПЕР ИГРЫ */
+.super-game-button {
+    background: linear-gradient(135deg, #ff8a00, #e52e71);
+    border-color: #ffd700;
+    position: relative;
+    overflow: hidden;
+}
+
+.super-game-button::before {
+    content: "⭐";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+}
+
+.super-game-button .package-name {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.super-game-button .super-desc {
+    font-size: 0.9rem;
+    color: #ffeb3b;
+    margin-top: 5px;
+    font-style: italic;
+}

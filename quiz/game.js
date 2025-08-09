@@ -4,6 +4,8 @@ let score = 0;
 let timerInterval = null;
 let timeLeft = 30;
 let timerAudio = null; // Можно добавить аудио таймера позже
+let isSuperGame = false;
+let superGameKey = '';
 
 // Элементы
 const quizScreen = document.getElementById('quizScreen');
@@ -49,7 +51,21 @@ nextButton.addEventListener('click', () => {
     }
 });
 
+// Обновленная функция loadPackage
 function loadPackage(packageFile, startIndex = 0) {
+    // Проверяем, является ли это супер-игрой
+    const superParam = urlParams.get('super');
+    
+    if (superParam) {
+        isSuperGame = true;
+        superGameKey = decodeURIComponent(superParam);
+        loadSuperGame(superGameKey, startIndex);
+    } else {
+        loadRegularPackage(packageFile, startIndex);
+    }
+}
+
+function loadRegularPackage(packageFile, startIndex = 0) {
     fetch(packageFile)
         .then(response => {
             if (!response.ok) {
@@ -58,14 +74,15 @@ function loadPackage(packageFile, startIndex = 0) {
             return response.json();
         })
         .then(data => {
-            questions = data;
+            // Перемешиваем вопросы
+            questions = shuffleArray(data);
             currentQuestionIndex = Math.max(0, Math.min(startIndex, questions.length - 1));
             
             if (totalQuestionsCountEl) {
                 totalQuestionsCountEl.innerText = questions.length;
             }
             
-            console.log(`Пакет "${currentPackageName}" загружен. Начинаем с вопроса ${currentQuestionIndex + 1}:`, questions);
+            console.log(`Пакет "${currentPackageName}" загружен и перемешан. Всего вопросов: ${questions.length}`);
             if (questions.length > 0) {
                 showQuestion();
             } else {
@@ -76,6 +93,38 @@ function loadPackage(packageFile, startIndex = 0) {
             console.error("Ошибка загрузки пакета:", error);
             questionText.innerText = `Ошибка загрузки пакета: ${error.message}`;
         });
+}
+
+function loadSuperGame(key, startIndex = 0) {
+    try {
+        const superGameData = localStorage.getItem(key);
+        if (!superGameData) {
+            throw new Error('Данные супер игры не найдены.');
+        }
+        
+        const parsedData = JSON.parse(superGameData);
+        // Перемешиваем вопросы
+        questions = shuffleArray(parsedData.questions);
+        currentQuestionIndex = Math.max(0, Math.min(startIndex, questions.length - 1));
+        
+        if (totalQuestionsCountEl) {
+            totalQuestionsCountEl.innerText = questions.length;
+        }
+        
+        console.log(`Супер игра "${parsedData.name}" загружена и перемешана. Всего вопросов: ${questions.length}`);
+        if (questions.length > 0) {
+            showQuestion();
+        } else {
+            questionText.innerText = "В супер игре нет вопросов.";
+        }
+        
+        // Очищаем localStorage после загрузки, чтобы не засорять
+        // localStorage.removeItem(key);
+        
+    } catch (error) {
+        console.error("Ошибка загрузки супер игры:", error);
+        questionText.innerText = `Ошибка загрузки супер игры: ${error.message}`;
+    }
 }
 
 function showQuestion() {
@@ -222,6 +271,7 @@ function resetUI() {
     optionsContainer.innerHTML = '';
 }
 
+// В функции endGame обновим финальную кнопку для супер-игры
 function endGame() {
     resetUI();
     questionText.innerText = `Викторина окончена! Ваш счёт: ${score} из ${questions.length}`;
@@ -229,6 +279,8 @@ function endGame() {
         <div style="font-size: 2rem; margin: 20px 0;">
             Точность: ${Math.round((score / questions.length) * 100)}%
         </div>
-        <button class="btn next-button" onclick="location.href='index.html'">К выбору пакетов</button>
+        <button class="btn next-button" onclick="location.href='index.html'">
+            ${isSuperGame ? 'К выбору режима' : 'К выбору пакетов'}
+        </button>
     `;
 }
