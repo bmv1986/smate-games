@@ -18,9 +18,7 @@ body, html {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    padding: 0;
     position: relative;
 }
 
@@ -45,7 +43,7 @@ body, html {
     transform: translateY(0);
 }
 
-/* --- Страница выбора пакетов (общая для index.html) --- */
+/* --- Страница выбора пакетов (index.html) --- */
 .main-screen {
     background-image: url('../assets/background.jpg');
     background-size: cover;
@@ -148,6 +146,7 @@ body, html {
     background-color: #111;
     padding: 40px 20px;
     text-align: center;
+    min-height: 100vh;
 }
 
 .package-start-screen h1 {
@@ -168,6 +167,7 @@ body, html {
     gap: 20px;
     width: 100%;
     max-width: 500px;
+    margin: 0 auto;
 }
 
 .start-button, .question-select {
@@ -193,12 +193,199 @@ body, html {
     color: white;
 }
 
-/* --- Стили для самой игры (game.html) --- */
-/* ... (все стили из предыдущего сообщения) ... */
+
+/* ========================================================================== */
+/* === СТИЛИ ДЛЯ СТРАНИЦЫ ИГРЫ (game.html) НАЧИНАЮТСЯ ЗДЕСЬ === */
+/* ========================================================================== */
+
+/* --- Шапка игры --- */
+.game-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    height: 60px;
+}
+
+.question-counter {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 6px 15px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.question-counter .separator {
+    margin: 0 4px;
+    color: #aaa;
+}
+
+.back-button {
+    background-color: #555;
+    color: white;
+    font-size: 1rem;
+    padding: 8px 12px;
+    min-width: 80px;
+}
+
+.back-button:hover {
+    background-color: #777;
+}
+
+/* --- Основной контент викторины --- */
+.quiz-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px 40px;
+    text-align: center;
+}
+
+.question-text {
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    padding: 0 20px;
+    max-width: 95%;
+    line-height: 1.4;
+}
+
+/* --- Таймер --- */
+.quiz-timer {
+    width: 80%;
+    max-width: 500px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.timer-bar {
+    width: 100%;
+    height: 30px;
+    background-color: #333;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid #555;
+}
+
+.timer-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #4caf50, #ff9800, #f44336);
+    border-radius: 15px;
+    transition: width 1s linear;
+    transform-origin: left;
+}
+
+.timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+
+/* --- Варианты ответов --- */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 90%;
+    max-width: 800px;
+    margin-bottom: 30px;
+}
+
+.option-button {
+    background-color: #222;
+    color: white;
+    border: 2px solid #555;
+    border-radius: 12px;
+    padding: 20px 10px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.option-button:hover:not(.disabled) {
+    background-color: #333;
+    border-color: #777;
+    transform: translateY(-3px);
+}
+
+.option-button.correct {
+    background-color: #4caf50 !important;
+    border-color: #45a049 !important;
+    color: white !important;
+}
+
+.option-button.incorrect {
+    background-color: #f44336 !important;
+    border-color: #d32f2f !important;
+    color: white !important;
+}
+
+.option-button.disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* --- Экран результата --- */
+.result-screen {
+    text-align: center;
+    padding: 20px;
+    background: rgba(30, 30, 40, 0.8);
+    border-radius: 15px;
+    max-width: 80%;
+}
+
+.result-message {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.result-message.correct {
+    color: #4caf50;
+}
+
+.result-message.incorrect {
+    color: #f44336;
+}
+
+.explanation {
+    font-size: 1.4rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.next-button {
+    background-color: #2196f3;
+    color: white;
+    font-size: 1.3rem;
+    padding: 15px 30px;
+}
+
+.next-button:hover {
+    background-color: #1976d2;
+}
 
 
 /* --- Адаптация под мобильные --- */
 @media (max-width: 768px) {
+    /* Общие адаптации */
     .header h1 {
         font-size: 2rem;
     }
@@ -222,18 +409,57 @@ body, html {
         font-size: 0.9rem;
     }
 
-    .back-button-top {
+    .back-button-top, .back-button {
         top: 10px;
         left: 10px;
         padding: 8px 12px;
         font-size: 0.9rem;
     }
     
-    /* Адаптация для game.html */
-    /* ... (стили из предыдущего сообщения) ... */
+    /* Адаптация для игры */
+    .question-text {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    .options-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        width: 95%;
+    }
+
+    .option-button {
+        font-size: 1.2rem;
+        padding: 15px 5px;
+    }
+
+    .result-message {
+        font-size: 1.7rem;
+    }
+
+    .explanation {
+        font-size: 1.2rem;
+    }
+
+    .game-header {
+        padding: 8px 10px;
+        height: 50px;
+    }
+
+    .question-counter {
+        font-size: 1.3rem;
+        padding: 5px 12px;
+    }
+
+    .back-button {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+        min-width: 70px;
+    }
 }
 
 @media (max-width: 480px) {
+    /* Общие адаптации */
     .header h1 {
         font-size: 1.7rem;
     }
@@ -251,6 +477,34 @@ body, html {
         height: auto;
     }
     
-    /* Адаптация для game.html */
-    /* ... (стили из предыдущего сообщения) ... */
+    /* Адаптация для игры */
+    .quiz-content {
+        padding: 70px 15px 30px;
+    }
+
+    .question-text {
+        font-size: 1.5rem;
+    }
+
+    .quiz-timer {
+        width: 95%;
+        margin-bottom: 30px;
+    }
+
+    .timer-text {
+        font-size: 1rem;
+    }
+
+    .option-button {
+        font-size: 1.1rem;
+        padding: 12px 5px;
+    }
+
+    .result-message {
+        font-size: 1.5rem;
+    }
+
+    .explanation {
+        font-size: 1.1rem;
+    }
 }
